@@ -1,0 +1,6 @@
+*examine cutting/slicing physics in more detail(how to apply forces etc.)
+*add different materials
+*calculate weigth based on the material and dimensions
+*add correct moment of inertia calculation for each shape
+*add collision
+*calculating center works weird(espacially on circles)
