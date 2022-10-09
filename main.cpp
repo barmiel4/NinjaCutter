@@ -9,7 +9,7 @@
 #include "debug.h"
 
 
-void addForceToClosest(rigidBody* rb, const sf::Vector2f mPos, bool& should)
+void addForceToClosest(rigidBody* rb, const sf::Vector2f& mPos, bool& should)
 {
 	static float forceStr = 150.f;
 	sf::Vector2f position = rb->poly.getPosition();

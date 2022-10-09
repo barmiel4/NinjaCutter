@@ -10,24 +10,25 @@
 //go through the array of all polygon in the scene, check collision with given line and cut them into pieces if it occured
 void cutShapes(std::vector<rigidBody>& shapes, line& cut);
 
-struct physics
+class physics
 {
+public:
 	std::vector<rigidBody> bodies;
 
-	physics(const std::vector<rigidBody>& bodies);
+	physics(const std::vector<rigidBody>&);
 
 	void simulate();
 
-	void addBody(const rigidBody& newbody);
+	void addBody(const rigidBody&);
 
-	void addBodies(const std::vector<rigidBody>& newbodies);
+	void addBodies(const std::vector<rigidBody>&);
 
-	void addPolygonsAsBodies(const std::vector<polygon>& newbodies);
+	void addPolygonsAsBodies(const std::vector<polygon>&);
 
 	//the object of a this class can be passed and will be implicitly converted to bodies if needed(i.e. for functions like cutShapes that need access to rigidBodies in the game)
 	operator std::vector<rigidBody>() const { return bodies; }
 
-	private:
+private:
 	void printBodies();
 };
 

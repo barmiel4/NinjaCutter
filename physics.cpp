@@ -109,11 +109,13 @@ void cutShapes(std::vector<rigidBody>& bodies, line& cut)
 
 			//experimental version(direction of the line and with 'closest to begin'):
 			direction = math::normalize(cut.end - cut.start);
-			direction *= strength;
+			//direction *= strength;
 			//std::cout << std::endl << sqrt(math::dotProduct(direction, direction)) << std::endl;
 
-			it = bodies.erase(it);							//delete shape that was cut
-			it = bodies.emplace(it, rb1);					//add two new chunks that were created and apply forces to them
+			//delete shape that was cut
+			it = bodies.erase(it);
+			//add two new chunks that were created and apply forces to them
+			it = bodies.emplace(it, rb1);
 			it->addForce(direction, closestToStart);
 			it = bodies.emplace(it, rb2);
 			it->addForce(direction, closestToStart);
