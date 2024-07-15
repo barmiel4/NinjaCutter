@@ -35,10 +35,11 @@ polygon::polygon(const properties& p_in, const vertecies& vert)
 
 
 	//BAD, BAD WAY:
-	sf::Vector2f mins(10000.0f, 10000.0f);
-	sf::Vector2f maxs(-10000.0f, -10000.0f);
+	auto center = findCenter(vert);
+	/*sf::Vector2f mins(10000.0f, 10000.0f);
+	sf::Vector2f maxs(-10000.0f, -10000.0f);*/
 
-	for (int i = 0; i < vert.size(); i++)
+	/*for (int i = 0; i < vert.size(); i++)
 	{
 		if (mins.x > vert[i].x)
 			mins.x = vert[i].x;
@@ -53,26 +54,40 @@ polygon::polygon(const properties& p_in, const vertecies& vert)
 			maxs.y = vert[i].y;
 	}
 
-	sf::Vector2f center = (maxs - mins) * 0.5f;
+	sf::Vector2f center = (maxs - mins) * 0.5f;*/
 
 
 	setPointCount(vert.size());
-	getPoint(0);
 	for (int v = 0; v < vert.size(); v++)
-		setPoint(v, vert[v] - mins - center);
+		//setPoint(v, vert[v] - mins - center);
+		setPoint(v, vert[v] - center);
 	dispenseProperites();
-	move(mins + center);		//move it so that they have the same 'local' position, before changing individual points
+	//this->move(mins + center);		//move it so that they have the same 'local' position, before changing individual points
+	this->move(center);		//move it so that they have the same 'local' position, before changing individual points
 	//setOrigin(mins);
 	/*std::cout << "origin is: ";
 	print(getOrigin());*/
 
+	debugLines.push_back(line({ 0.f, 0.f }, getPosition(), sf::Color::Cyan, 1));
+
 	//calculateMomentOfInertia();
 }
 
+//sf::Vector2f shitcenter(const vertecies& verts)
+//{
+//	//BAD, BAD WAY:
+//	sf::Vector2f vsum(0.f, 0.f);
+//
+//	for (const auto& v : verts)
+//		vsum += v;
+//
+//	return vsum / (float)verts.size();
+//}
+
+
 polygon::polygon(const uint16_t& vcount, const float& side, const properties& p_in)
 {
-	vertex = vcount;
-	setPointCount(vertex);
+	vertCount = vcount;
 	prop = p_in;
 	dispenseProperites();
 	draw(side);
@@ -109,8 +124,10 @@ void polygon::moveCenterOfMass(const sf::Vector2f& v)
 std::optional<std::vector<vertecies>> polygon::checkEdges(line cut)
 {
 	line edge;
-	cut.start -= (getPosition());
-	cut.end -= (getPosition());
+	//"move" the cut-line to the polygon space
+	/*cut.start -= getPosition();
+	cut.end -= getPosition();*/
+	cut.offsetBy(getPosition());
 	std::vector<vertecies> shapes(2);
 
 
@@ -121,7 +138,44 @@ std::optional<std::vector<vertecies>> polygon::checkEdges(line cut)
 		edge.setstart(getPoint(v));
 		edge.setend(getPoint((v + 1) % getPointCount()));
 
-		auto point = cut.linevline_2(edge);
+		//auto point = cut.linevline_2(edge);
+		auto point = cut & edge;
+
+		if (point)
+		{
+			changes++;
+			shapes[side].push_back(point.value());
+			side = !side;								//switch sides
+			shapes[side].push_back(point.value());
+		}
+		shapes[side].push_back(getPoint((v + 1) % getPointCount()));
+	}
+	if (changes == 2)
+		return shapes;
+	return std::nullopt;
+}
+
+//does exactly the same thing as polygon::checkEdges but with operator overloading
+std::optional<std::vector<vertecies>> polygon::operator / (line cut)
+{
+	line edge;
+	//"move" the cut-line to the polygon space
+	/*cut.start -= getPosition();
+	cut.end -= getPosition();*/
+	cut.offsetBy(getPosition());
+	std::vector<vertecies> shapes(2);
+
+
+	bool side = 0;			//begin with shape 0
+	char changes = 0;
+	for (int v = 0; v < getPointCount(); v++)
+	{
+		edge.setstart(getPoint(v));
+		edge.setend(getPoint((v + 1) % getPointCount()));
+
+		//auto point = cut.linevline_2(edge);
+		auto point = cut & edge;
+
 		if (point)
 		{
 			changes++;
@@ -150,28 +204,58 @@ void polygon::dispenseProperites()
 //test which method is better: that or with cos/sin. (The latter would need a -45d rotation when drawing a square)
 void polygon::draw(const float& side)
 {
-	float step = (360.0f / vertex) * M_PI / 180.0f;
-	//setPointCount(vertex);
+	setPointCount(vertCount);
+	float step = (360.0f / vertCount) * M_PI / 180.0f;
 	sf::Vector2f v(0, 0);
 	/*sf::Vector2f v(-side * .5f, -side / (tan(step / 2.0f) * 2.0f));
 	setPoint(0, v);*/
 	float nx;
-	char vc = 0;
-	vertecies verts;
+	uint8_t vc = 0;
 
-	while (vc < vertex)
+	sf::Vector2f center(0.f, 0.f);
+	sf::Vector2f offset(0.f, 0.f);
+
+	while (vc < vertCount)
 	{
 		nx = v.x * cos(step) - v.y * sin(step);
 		v.y = v.x * sin(step) + v.y * cos(step);
 		v.x = nx + side;
-		//setPoint(vc, v);
-		verts.push_back(v);
+		setPoint(vc, v - offset);
+		center += v;
 		vc++;
 	}
 
-	//very very BAD:
-	*this = polygon(prop, verts);
+	//very very BAD(CHANGE) - its the same code as in contructor(props, verts) previously called:
+	center /= (float)getPointCount();
+	for (int v = 0; v < getPointCount(); v++)
+		setPoint(v, getPoint(v) - center);
+	this->move(center);		
 }
+
+sf::Vector2f polygon::findCenter(const vertecies& verts) const
+{
+	sf::Vector2f vsum(0.f, 0.f);
+
+	int i = 1;
+
+	for (const auto& v : verts)
+	{
+		vsum += v;
+		//i++;
+		////bool shouldAdd = ;
+		//if (verts.size() >= 6)
+		//{
+		//	if ((i % 3 == 0))
+		//		vsum += v;
+		//}
+		//else
+		//	vsum += v;
+	}
+
+	return vsum / (float)verts.size();
+}
+
+//write afunction that handles finding center and offseting the shapes correctly (which is currently done by one of the contructors)
 
 
 //void polygon::calculateMomentOfInertia()

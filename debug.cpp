@@ -16,5 +16,5 @@ void print(const sf::Vector2f& v)
 
 void fInfo(const char* const fName, const char* const location, const char* const message) 
 {
-	std::cout << "[function: " << fName << " inside: " << location << "]: " << message << '\n';
+	std::cout << "[function: \"" << fName << "\" inside: " << location << "]: " << message << '\n';
 }

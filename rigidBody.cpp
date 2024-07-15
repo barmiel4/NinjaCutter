@@ -42,11 +42,15 @@ void rigidBody::addForce(const sf::Vector2f& force_in, const sf::Vector2f& effec
 	sf::Vector2f arm = effector;
 
 	//scale the effector to be in body space not world space(if is in world space):
-	if (inWorldSpace)
-		arm -= poly.getPosition();
+	//if (inWorldSpace)
+		arm -= (float)inWorldSpace * poly.getPosition();
 
 	line armLine(poly.getPosition(), poly.getPosition() + arm, sf::Color::Yellow, 1);
+
+#if VIS_DEBUG
 	debugLines.push_back(armLine);
+#endif
+
 	scaleArm(arm);
 
 	force = force_in;
@@ -81,8 +85,13 @@ void rigidBody::addForce(const sf::Vector2f& fDirection, const float& fStrength,
 	force = fDirection * fStrength;
 
 	line armLine(poly.getPosition(), poly.getPosition() + arm, sf::Color::Yellow, 1);
+
+#if VIS_DEBUG
 	debugLines.push_back(armLine);
+#endif
+
 	scaleArm(arm);
+
 
 	//linear movement:
 	//linearAcceleration = 
@@ -128,7 +137,7 @@ void rigidBody::update(const float& elapsedTime)
 
 //by default: one px == one cm
 //so if shape has side of 100px(cm) 
-//it has to be scaled back to m(all equations assume kg and m)
+//it has to be scaled from cm back to m by division over 100(since all equations assume kg and m)
 void rigidBody::scaleArm(sf::Vector2f& arm)
 {
 	arm *= 0.01f;

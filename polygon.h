@@ -24,7 +24,7 @@ struct properties
 struct polygon : public sf::ConvexShape
 {
 	properties prop;
-	uint16_t vertex;
+	uint16_t vertCount;
 	sf::Vector2f origin;
 	//float momentOfInertia;
 	float sidelength;
@@ -51,8 +51,13 @@ struct polygon : public sf::ConvexShape
 	//test each edge of given polygon with a given line to check if it fully penetrates
 	std::optional<std::vector<vertecies>> checkEdges(line cut);
 
+	//does exactly the same thing as polygon::checkEdges but with operator overloading
+	std::optional<std::vector<vertecies>> operator / (line);
+
 protected:
 	void draw(const float& a);
+
+	sf::Vector2f findCenter(const vertecies&) const;
 
 	//void calculateMomentOfInertia();
 };

@@ -7,9 +7,9 @@ circle::circle() {}
 circle::circle(float radius, const properties& p_in) 
 {
 	//vertex = 40;
-	vertex = 69;			
+	vertCount = 35;			
 	//vertex = 360;			//slow AS FUCK
-	setPointCount(vertex);
+	setPointCount(vertCount);
 	//radius *= sqrt(2 - 2 * cos(2 * M_PI / vertex));
 	draw(radius);
 
@@ -25,10 +25,10 @@ circle::circle(float radius, const properties& p_in)
 void circle::draw(const float& r)
 {
 	constexpr float TWOPI = 2 * M_PI;
-	float step = TWOPI / vertex;
+	float step = TWOPI / vertCount;
 	float angle = 0.0f;
 
-	for (int a = 0; a < vertex; a++)
+	for (int a = 0; a < vertCount; a++)
 	{
 		//std::cout << "sin: " << sin(angle) << ", cos: " << cos(angle) << std::endl;
 		setPoint(a, sf::Vector2f(cos(angle) * r, sin(angle) * r));

@@ -6,7 +6,10 @@
 #include "physics.h"
 #include "rigidBody.h"
 
+//#include <Windows.h>
+
 #include "debug.h"
+
 
 
 void addForceToClosest(rigidBody* rb, const sf::Vector2f& mPos, bool& should)
@@ -61,21 +64,20 @@ int main()
 	//==============================BLADE CODE==============================
 	line cut;
 	bool hasStart = 0;
+	//char hasStart = -1;
+	//char x{ -1 };
 	//==============================BLADE CODE==============================
 
 	//===============================POLYGON CODE=============================
 	std::vector<rigidBody> shapes;
 
-	float rotation = 0.0f;
+	//float rotation = 0.0f;
 	rectangle r1(200, properties(
 		sf::Vector2f(wi / 2 - 250 , hi / 2 - 50),
 		sf::Color(255, 255, 255, 128),
 		sf::Color::White,
 		-1.0f
 		));
-
-	//rotation test(successful):
-	//r1.rotate(45.0f);				//[FIXED]	rotate only takes the vertecies as a reference point. It doesn't modify it. It's a problem since on those vertecies we're operating
 
 	/*sf::RectangleShape ghost({100, 100});
 	ghost.setFillColor(sf::Color(0, 0, 0, 0));
@@ -91,7 +93,7 @@ int main()
 		-1.0f
 	));
 
-	circle c1(55, properties(
+	circle c1(70, properties(
 		sf::Vector2f(600, 250),
 		sf::Color(1, 1, 255, 128),
 		sf::Color::Blue,
@@ -107,7 +109,7 @@ int main()
 	));
 
 	
-	//convex polygon:
+	//huge convex polygon:
 	polygon sth(13, 150, properties(
 		sf::Vector2f(wi / 2 - 120, hi / 2 - 290),
 		sf::Color(73, 103, 255, 128.0f),
@@ -158,17 +160,39 @@ int main()
 	sf::Clock timer;
 	//================================TIMING CODE=============================
 	
+	//test
+	/*sf::CircleShape cc(70);
+	cc.setPosition({400.f, 400.f});
+	cc.setFillColor(sf::Color::Cyan);*/
+
+	/*polygon cc;
+	cc.setPointCount(5);
+	cc.setPoint(0, { 0.f, 0.f });
+	cc.setPoint(1, { 200.f, 50.f });
+	cc.setPoint(2, { 140.f, 120.f });
+	cc.setPoint(3, { 50.f, 210.f });
+	cc.setPoint(4, { 10.f, 170.f });
+
+	cc.setFillColor(sf::Color::Cyan);
+	cc.setPosition({ wi / 2.f }, { hi / 2.f });*/
+
+	//shapes.push_back({ cc, 2.f });
+	//pure app: 5300
+	//drawing sf::ConvexShape: 5050 (-250)
+	//drawing polygon: ~5200 (-100)
+	//drawing rigidbody: 
+	//drawing rigidbody from the array: 4400 (-900 // -650)
 
 
 	//================================PHYSICS CODE==============================
 	physics pengine(shapes);
 	bool shouldAddForce = 0;
 
-	//[DEBUG] add forces based one mouse position:
+	//[DEBUG] add forces based on mouse position:
 	rigidBody* closest = nullptr;
 	float distance = wi * 2;
 	float distance_c;
-	sf::Vector2f mPos;
+	sf::Vector2f mousePos;
 	//================================PHYSICS CODE==============================
 
 
@@ -177,6 +201,8 @@ int main()
 	while (window.isOpen())
 	{
 		fElapsedTime = timer.getElapsedTime().asMicroseconds() / 1000000.0f;
+		while (fElapsedTime < LOCKED_FPS) { fElapsedTime = timer.getElapsedTime().asMicroseconds() / 1000000.0f; }
+
 		//std::cout << fElapsedTime << std::endl;
 		timer.restart();
 		while (window.pollEvent(e))
@@ -204,8 +230,15 @@ int main()
 				}*/
 
 			}
-			else
+			else if (hasStart)
+			{
+				cutShapes(pengine.bodies, cut);
 				hasStart = 0;
+			}
+
+			//else 
+			//	cut.linestate = (cut.linestate != lineState::ABSENT) ? lineState::COMPLETE: lineState::ABSENT;	//hasStart = 0;
+			//	//cut.linestate = (cut.linestate == lineState::ABSENT) ? lineState::COMPLETE : lineState::ABSENT;	//hasStart = 0;
 
 			//if (e.mouseButton.button == sf::Mouse::Left && e.type == sf::Event::MouseButtonReleased)
 			//{
@@ -221,13 +254,14 @@ int main()
 
 		window.clear();
 
-		mPos = { sf::Mouse::getPosition(window) };
+		mousePos = { sf::Mouse::getPosition(window) };
 		//mPos = sf::Mouse::getPosition();
 		//mPos = { (float)mPos.x, (float)mPos.y };
 
-		//first draw shapes:
 		distance = wi * 2;
-		for (auto& s : pengine.bodies)
+		
+		//first draw shapes:
+		for (auto& s : pengine.bodies)	//in non debug build turn it to >const auto&<
 		{	
 			window.draw(s);
 			//toCenter.setstart(sf::Vector2f(0, 0));
@@ -243,7 +277,7 @@ int main()
 			//s.poly.rotate(150 * fElapsedTime * rot);
 
 			//determin closest shape to the mouse cursor:
-			distance_c = math::length(s.poly.getPosition() - mPos);
+			distance_c = math::length(s.poly.getPosition() - mousePos);
 			if (distance_c < distance)
 			{
 				distance = distance_c;
@@ -252,7 +286,8 @@ int main()
  		}
 
 		//do:
-		addForceToClosest(closest, mPos, shouldAddForce);
+		if(closest)
+			addForceToClosest(closest, mousePos, shouldAddForce);
 
 		/*if (shapes.size() >= 2)
 		{
@@ -275,17 +310,16 @@ int main()
 		//rotation += 1.0f * (rotation <= 360) * dElapsedTime;
 		//std::cout << rotation << std::endl;
 
-		//[work-around] check collision only if the lines start and end wont change
-		if (!hasStart)
-			cutShapes(pengine.bodies, cut);
-
 		//simulate physics:
 		pengine.simulate();
 
+#ifdef VIS_DEBUG
 		//draw debug lines:
-		/*for(auto& l : debugLines)
-			l.draw(window);*/
-
+		for(const auto& l : debugLines)
+			l.draw(window);
+#endif
+		//window.draw(rb);	//5000
+		//window.draw(rb.poly); //5100
 		window.display();
 	}
 }

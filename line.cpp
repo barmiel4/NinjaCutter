@@ -1,5 +1,6 @@
 #include "line.h"
 #include "ninjamath.h"
+#include "debug.h"
 
 
 line::line(const sf::Color& color, const bool& de)
@@ -34,6 +35,12 @@ void line::setend(const sf::Vector2f& end)
 	this->end = vert[1].position = end;
 }
 
+void line::offsetBy(const sf::Vector2f& offset)
+{
+	setstart(start - offset);
+	setend(end - offset);
+}
+
 float line::direction()
 {
 	return (end.y - start.y) / (end.x - start.x);
@@ -64,7 +71,7 @@ bool line::online(const sf::Vector2f& point)
 //GONE
 
 //cross product approach
-std::optional<sf::Vector2f> line::linevline_2(line l)		//2nd input is for debug only!
+std::optional<sf::Vector2f> line::linevline_2(const line& l)		//2nd input is for debug only!
 {
 	sf::Vector2f point;
 	//this line
@@ -85,6 +92,36 @@ std::optional<sf::Vector2f> line::linevline_2(line l)		//2nd input is for debug 
 	float u = u_n / rxs;
 
 	if (rxs != 0 && (t >= 0 && t <= 1) && (u >= 0 && u <= 1))
+		return p + (t * r);
+
+	return std::nullopt;
+}
+
+std::optional<sf::Vector2f> line::operator & (const line& l)
+{
+	//fInfo("operator &", "line", "experiment with the return value");	//use branchless pattern and return some impossible value(or sth)
+
+	//this line
+	sf::Vector2f p = start;
+	sf::Vector2f r = end - start;
+
+	//input line
+	sf::Vector2f q = l.start;
+	sf::Vector2f s = l.end - l.start;
+
+
+	sf::Vector2f qmp = q - p;
+	float rxs = math::crossZ(r, s);
+	if (!rxs)
+		return std::nullopt;
+
+	float t_n = math::crossZ(qmp, s);		//t's nominator
+	float u_n = math::crossZ(qmp, r);		//u's nominator
+
+	float t = t_n / rxs;
+	float u = u_n / rxs;
+
+	if ((t >= 0 && t <= 1) && (u >= 0 && u <= 1))
 	{
 		//point = p + (t * r);
 		return p + (t * r);
@@ -92,13 +129,14 @@ std::optional<sf::Vector2f> line::linevline_2(line l)		//2nd input is for debug 
 	return std::nullopt;
 }
 
+
 void line::resetLine()
 {
 	setstart({ -1.0f, -1.0f });
 	setend({ -1.0f, -1.0f });
 }
 
-void line::draw(sf::RenderWindow& window, bool dotend)
+void line::draw(sf::RenderWindow& window, bool dotend) const 
 {
 	window.draw(vert, 2, sf::Lines);
 
