@@ -126,7 +126,7 @@ int main()
 #ifdef _DEBUG
 
 	rigidBody* closest = nullptr;
-	float distance = wi * 2;
+	float currentDistance = wi * 2;
 	float distance_c;
 
 #endif // _DEBUG
@@ -182,9 +182,9 @@ int main()
 
 			//determine closest shape to the mouse cursor:
 			distance_c = math::length(s.poly.getPosition() - mousePos);
-			if (distance_c < distance)
+			if (distance_c < currentDistance)
 			{
-				distance = distance_c;
+				currentDistance = distance_c;
 				closest = &s;
 			}
 
@@ -196,7 +196,7 @@ int main()
 		if (closest)
 			addForceToClosest(closest, mousePos, shouldAddForce);
 
-		distance = wi * 2; //reset distance for next frame
+		currentDistance = wi * 2; //reset distance for next frame
 
 #endif // _DEBUG
 
