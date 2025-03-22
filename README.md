@@ -13,7 +13,7 @@ It's physics demo that allows users to procedurally slice any convex shape repea
 ### Slicing 
 todo
 
-### Physics
+### Physics simulation
 todo
 
 ## Tools 
