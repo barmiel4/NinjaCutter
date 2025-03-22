@@ -1,6 +1,6 @@
 # Ninja Cutter 
 ## About the project
-It's physics demo that allows users to procedurally slice any convex shape repeatedly with their mouse while supporting the basic physics simualation, such as applying forces, acceleration and velocity intergration
+It's a physics demo that allows users to procedurally slice any convex shape repeatedly with their mouse while supporting the basic physics simualation, such as applying forces, acceleration and velocity intergration
 
 ## Demo showcase
 <p align="center">
