@@ -1,4 +1,4 @@
-#include "rigidBody.h"
+#include "Physics/rigidBody.h"
 #include "debug.h"
 
 //#define DETAILED_DEBUG

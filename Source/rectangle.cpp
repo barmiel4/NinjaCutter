@@ -1,4 +1,4 @@
-#include "rectangle.h"
+#include "Geometry/rectangle.h"
 #include "debug.h"
 
 rectangle::rectangle(float a, const properties& p_in)

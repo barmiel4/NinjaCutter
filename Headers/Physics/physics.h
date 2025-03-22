@@ -1,6 +1,6 @@
 #pragma once
-#include "rigidBody.h"
-#include "line.h"
+#include "Physics/rigidBody.h"
+#include "Geometry/line.h"
 #include "gameVariables.h"
 
 //moved to the polygon code

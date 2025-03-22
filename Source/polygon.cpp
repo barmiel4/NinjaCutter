@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "polygon.h"
+#include "Geometry/polygon.h"
 #include "debug.h"
 
 properties::properties() {}

@@ -1,10 +1,10 @@
 #include <iostream>
 #include "gameVariables.h"
-#include "ninjamath.h"
-#include "line.h"
-#include "shapes.h"
-#include "physics.h"
-#include "rigidBody.h"
+#include "Math/ninjamath.h"
+#include "Geometry/line.h"
+#include "Geometry/shapes.h"
+#include "Physics/physics.h"
+#include "Physics/rigidBody.h"
 
 //#include <Windows.h>
 

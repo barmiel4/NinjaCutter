@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Headers;$(SolutionDir)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Headers;$(SolutionDir)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -147,30 +147,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="circle.cpp" />
-    <ClCompile Include="debug.cpp" />
-    <ClCompile Include="elipse.cpp" />
-    <ClCompile Include="gameVariables.cpp" />
-    <ClCompile Include="line.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ninjamath.cpp" />
-    <ClCompile Include="physics.cpp" />
-    <ClCompile Include="polygon.cpp" />
-    <ClCompile Include="rectangle.cpp" />
-    <ClCompile Include="rigidBody.cpp" />
+    <ClCompile Include="Source\circle.cpp" />
+    <ClCompile Include="Source\debug.cpp" />
+    <ClCompile Include="Source\elipse.cpp" />
+    <ClCompile Include="Source\gameVariables.cpp" />
+    <ClCompile Include="Source\line.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\ninjamath.cpp" />
+    <ClCompile Include="Source\physics.cpp" />
+    <ClCompile Include="Source\polygon.cpp" />
+    <ClCompile Include="Source\rectangle.cpp" />
+    <ClCompile Include="Source\rigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="circle.h" />
-    <ClInclude Include="debug.h" />
-    <ClInclude Include="elipse.h" />
-    <ClInclude Include="gameVariables.h" />
-    <ClInclude Include="line.h" />
-    <ClInclude Include="ninjamath.h" />
-    <ClInclude Include="physics.h" />
-    <ClInclude Include="polygon.h" />
-    <ClInclude Include="rectangle.h" />
-    <ClInclude Include="rigidBody.h" />
-    <ClInclude Include="shapes.h" />
+    <ClInclude Include="Headers\Geometry\circle.h" />
+    <ClInclude Include="Headers\debug.h" />
+    <ClInclude Include="Headers\Geometry\elipse.h" />
+    <ClInclude Include="Headers\gameVariables.h" />
+    <ClInclude Include="Headers\Geometry\line.h" />
+    <ClInclude Include="Headers\Math\ninjamath.h" />
+    <ClInclude Include="Headers\Physics\physics.h" />
+    <ClInclude Include="Headers\Geometry\polygon.h" />
+    <ClInclude Include="Headers\Geometry\rectangle.h" />
+    <ClInclude Include="Headers\Physics\rigidBody.h" />
+    <ClInclude Include="Headers\Geometry\shapes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

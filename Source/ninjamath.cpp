@@ -1,4 +1,4 @@
-#include "ninjamath.h"
+#include "Math/ninjamath.h"
 
 
 sf::Vector3f math::cross2D(const sf::Vector2f& v1, const sf::Vector2f& v2)

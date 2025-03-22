@@ -15,72 +15,72 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameVariables.cpp">
+    <ClCompile Include="Source\gameVariables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ninjamath.cpp">
+    <ClCompile Include="Source\ninjamath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="line.cpp">
+    <ClCompile Include="Source\line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="polygon.cpp">
+    <ClCompile Include="Source\polygon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rectangle.cpp">
+    <ClCompile Include="Source\rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="circle.cpp">
+    <ClCompile Include="Source\circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="elipse.cpp">
+    <ClCompile Include="Source\elipse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="debug.cpp">
+    <ClCompile Include="Source\debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="physics.cpp">
+    <ClCompile Include="Source\physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rigidBody.cpp">
+    <ClCompile Include="Source\rigidBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameVariables.h">
+    <ClInclude Include="Headers\gameVariables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ninjamath.h">
+    <ClInclude Include="Headers\Math\ninjamath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="line.h">
+    <ClInclude Include="Headers\Geometry\line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="polygon.h">
+    <ClInclude Include="Headers\Geometry\polygon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rectangle.h">
+    <ClInclude Include="Headers\Geometry\rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shapes.h">
+    <ClInclude Include="Headers\Geometry\shapes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="circle.h">
+    <ClInclude Include="Headers\Geometry\circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="elipse.h">
+    <ClInclude Include="Headers\Geometry\elipse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="debug.h">
+    <ClInclude Include="Headers\debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="physics.h">
+    <ClInclude Include="Headers\Physics\physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rigidBody.h">
+    <ClInclude Include="Headers\Physics\rigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

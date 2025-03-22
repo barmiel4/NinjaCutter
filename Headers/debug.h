@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "SFML/Graphics.hpp"
-#include "line.h"
+#include "Geometry/line.h"
 
 
 #define logS std::cout << "==================================================\n"

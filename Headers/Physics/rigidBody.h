@@ -1,8 +1,8 @@
 #pragma once
 #include <optional>
 #include "SFML/Graphics.hpp"
-#include "ninjamath.h"
-#include "polygon.h"
+#include "Math/ninjamath.h"
+#include "Geometry/polygon.h"
 
 
 struct forcesphere

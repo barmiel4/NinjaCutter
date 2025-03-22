@@ -1,5 +1,5 @@
-#include "line.h"
-#include "ninjamath.h"
+#include "Geometry/line.h"
+#include "Math/ninjamath.h"
 #include "debug.h"
 
 

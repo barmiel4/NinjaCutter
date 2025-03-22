@@ -2,8 +2,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <optional>
-#include "ninjamath.h"
-#include "line.h"
+#include "Math/ninjamath.h"
+#include "Geometry/line.h"
 
 typedef std::vector<sf::Vector2f> vertecies;
 

@@ -1,5 +1,5 @@
-#include "physics.h"
-#include "rigidBody.h"
+#include "Physics/physics.h"
+#include "Physics/rigidBody.h"
 #include "debug.h"
 
 //checkEdges moved to the polygon code
