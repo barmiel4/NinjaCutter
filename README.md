@@ -28,7 +28,7 @@ It can be applied to the first cut piece directly or negated to push the other c
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b8c5a874-e18c-48aa-8a35-32be405549a8"><br>
-  <b>Process of force direction calculation</b>
+  <b>Process of calculating the force direction</b>
 </p>
 
 ### Physics simulation
