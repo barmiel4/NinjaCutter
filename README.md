@@ -14,7 +14,9 @@ It's a physics demo that allows users to procedurally slice any convex shape rep
 todo
 
 ### Physics simulation
-todo
+The base of the physics engine resides in the rigidBody class. Each rigid body stores its physics properties: mass linear and angular velocity torque along with data about the polygon that will be simulated and rendered. Also, each rigid body stores its moment of inertia - for simplicity it is calculated bases on the shapes bouding box. 
+
+Each body can be moved with a force. Here, a vector from the shape's center to the force effector point, also called **the force arm** is calculated. Then, the linear velocity is determined by scaling the force vector by the mass of the rigid body. By crossing the arm and force vector, a torque can be calculated and, along with moment of inertia used to set the angular velocity. Then the update function moves and rotates the shape based on the velocities calculated previously.
 
 ## Tools 
 Project was implemented in C++17 and uses simple library SFML-2.5.1 for keyboard event handling and shapes rendering.
