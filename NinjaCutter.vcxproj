@@ -168,9 +168,6 @@
     <ClInclude Include="rigidBody.h" />
     <ClInclude Include="shapes.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="todo.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -17,21 +17,25 @@ rigidBody::rigidBody(const polygon& poly_in)
 rigidBody::rigidBody(const polygon& poly_in, const float& mass_in)
 	: poly(poly_in), mass(mass_in)
 {
-	std::cout << mass << std::endl;
 	linearVelocity = { 0.0f, 0.0f };
 	force = { 0.0f, 0.0f };
 	angularVelocity = 0.0f;
 	torque = 0.0f;
 
-	std::cout << "assumes that all shapes deriving from polygon are rectangular[FOR NOW]!!!\n";
 	auto d = poly.getLocalBounds();
 	//from centimeters to meters:
-	d.width  /= 100.0f;
+	d.width /= 100.0f;
 	d.height /= 100.0f;
+	momentOfInertia = (d.width * d.width + d.height * d.height) * (mass / 12.0f)/* / 10000.0f*/;
+
+#ifdef DETAILED_DEBUG 
+
+	std::cout << "assumes that all shapes deriving from polygon are rectangular[FOR NOW]!!!\n";
 	std::cout << "Shape info:\n";
 	std::cout << "width; heigth in m\t" << d.width << "; " << d.height << std::endl;
-	momentOfInertia = (d.width * d.width + d.height * d.height) * (mass / 12.0f)/* / 10000.0f*/;
 	std::cout << "moment of inertia\t" << momentOfInertia << std::endl;
+
+#endif //DETAILED_DEBUG
 }
 
 // add force_in at effector(location). inWorldSpace tell whether effector is expressed in world space or in body space - by default it, 
@@ -54,7 +58,6 @@ void rigidBody::addForce(const sf::Vector2f& force_in, const sf::Vector2f& effec
 	scaleArm(arm);
 
 	force = force_in;
-	//linearVelocity = (1.0f / mass) * force;
 
 	linearVelocity += (force / mass);
 
@@ -91,7 +94,6 @@ void rigidBody::addForce(const sf::Vector2f& fDirection, const float& fStrength,
 #endif
 
 	scaleArm(arm);
-
 
 	//linear movement:
 	//linearAcceleration = 

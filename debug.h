@@ -9,7 +9,6 @@
 
 extern std::vector<line> debugLines;
 
-
 //print a vector of ints
 void print(const sf::Vector2i& v);
 

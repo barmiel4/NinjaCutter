@@ -14,8 +14,6 @@ rectangle::rectangle(float a, const properties& p_in)
 	
 	prop = p_in;
 	dispenseProperites();
-	/*std::cout << "origin is: ";
-	print(getOrigin());*/
 	
 }
 
