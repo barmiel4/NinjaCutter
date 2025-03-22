@@ -11,8 +11,8 @@ It's a physics demo that allows users to procedurally slice any convex shape rep
 ## Implementation details
 
 ### Slicing 
-todo
-
+The slicing alorigthm is the curcial part of the engine. Once user releases the Left Mouse Button a cut line is generated and each edge of each shape is tested against this line to check for the intersection points. The test treats each each and the cut line as mathematical ray defined as v(t) = v0 + t * d, where v0 is a vertex and d is the edge that is currently testes expressed as vector. The algorithm calculates a _t_ that tell how much should we move on the edge vector to each intersection point. _t_
+is expected to be in range <0; 1>. If it's beyond that, it means that the intersection point is not on the edge. Once two intersection points are found
 ### Physics simulation
 The base of the physics engine resides in the rigidBody class. Each rigid body stores its physics properties: mass linear and angular velocity torque along with data about the polygon that will be simulated and rendered. Also, each rigid body stores its moment of inertia - for simplicity it is calculated bases on the shapes bouding box. 
 
@@ -38,4 +38,4 @@ The project has few areas where improvements are planned:
 * System architecure - can be rewised and improved to be more flexible
 
 ## Idea origin
-The project was created when I wanted to experiment with 2D graphics and phyiscs. The main inspiration was _Fruit Ninja_, a mobile game where players can slice throwed fruits with the rapid finger movement thorugh the screen. 
+The project was created when I wanted to experiment with 2D graphics and phyiscs. The main inspiration was _Fruit Ninja_, a mobile game where players can slice fruits floating on the screen with the rapid finger movement thorugh the screen. 
