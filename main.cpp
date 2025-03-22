@@ -172,8 +172,6 @@ int main()
 		window.clear();
 
 		mousePos = { sf::Mouse::getPosition(window) };
-
-		distance = wi * 2;
 		
 		//first draw shapes:
 		for (auto& s : pengine.bodies)
@@ -197,6 +195,8 @@ int main()
 
 		if (closest)
 			addForceToClosest(closest, mousePos, shouldAddForce);
+
+		distance = wi * 2; //reset distance for next frame
 
 #endif // _DEBUG
 
